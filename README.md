@@ -11,3 +11,16 @@ docker compose build server
 docker compose up -d --build server
 docker compose restart server
 ```
+
+Run the k6 performance testing:
+
+```sh
+docker compose up --build
+docker compose run --rm --entrypoint=k6 k6-tests run /tests/hello-k6.js
+```
+
+Stop services:
+
+```sh
+docker compose down
+```
