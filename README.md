@@ -37,3 +37,21 @@ Connect to the DB from terminal:
 docker exec -it my_db_container_name psql -U username database
 \dt #list tables
 ```
+
+See the top ten average query execution times of queries that have been run more than 5 times:
+
+```sh
+SELECT query, mean_exec_time
+  FROM pg_stat_statements
+  WHERE calls > 5
+  ORDER BY mean_exec_time DESC
+  LIMIT 10;
+```
+
+Studying connection
+
+```sh
+SELECT pid, usename, backend_start, query_start, state, query
+  FROM pg_stat_activity
+  WHERE state IS NOT null;
+```
