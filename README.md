@@ -36,6 +36,7 @@ Connect to the DB from terminal:
 ```sh
 docker exec -it postgresql_database_dab psql -U username database
 \dt #list tables
+\d users_to_items #list a table
 ```
 
 See the top ten average query execution times of queries that have been run more than 5 times:
