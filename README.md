@@ -34,7 +34,7 @@ docker compose down
 Connect to the DB from terminal:
 
 ```sh
-docker exec -it my_db_container_name psql -U username database
+docker exec -it postgresql_database_dab psql -U username database
 \dt #list tables
 ```
 
@@ -55,3 +55,13 @@ SELECT pid, usename, backend_start, query_start, state, query
   FROM pg_stat_activity
   WHERE state IS NOT null;
 ```
+
+Explain and analyse database query performance
+
+````sh
+EXPLAIN SELECT * FROM users WHERE id = 42;
+EXPLAIN ANALYZE SELECT * FROM users WHERE id = 42;
+EXPLAIN SELECT * FROM users WHERE name = 'User 42';
+EXPLAIN ANALYZE SELECT * FROM users WHERE name = 'User 42';
+                               ```
+````
