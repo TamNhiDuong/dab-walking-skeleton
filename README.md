@@ -66,3 +66,9 @@ EXPLAIN SELECT * FROM users WHERE name = 'User 42';
 EXPLAIN ANALYZE SELECT * FROM users WHERE name = 'User 42';
                                ```
 ````
+
+Caching data in the server, test the performance with
+
+```sh
+curl -w ' (%{time_total}s)' localhost:8000/hello/cache
+```
