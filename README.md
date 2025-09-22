@@ -72,3 +72,9 @@ Caching data in the server, test the performance with
 ```sh
 curl -w ' (%{time_total}s)' localhost:8000/hello/cache
 ```
+
+Verify server replicas:
+
+```sh
+curl -v localhost:8000
+```

@@ -11,6 +11,13 @@ const redis = new Redis(6379, "redis");
 
 app.use("/*", cors());
 app.use("/*", logger());
+// Verify the server replicas (horizontal scaling)
+const REPLICA_ID = crypto.randomUUID();
+
+app.use("*", async (c, next) => {
+    c.res.headers.set("X-Replica-Id", REPLICA_ID);
+    await next();
+});
 
 app.get("/", (c) => c.json({ message: "Hello world!" }));
 app.get("/todos", async (c) => {
