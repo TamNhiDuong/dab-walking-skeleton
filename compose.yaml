@@ -49,7 +49,10 @@ services:
     depends_on:
       - database
     deploy:
-      replicas: 2
+      replicas: 5
+      resources:
+        limits:
+          cpus: "0.1"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.server-router.entrypoints=web"
