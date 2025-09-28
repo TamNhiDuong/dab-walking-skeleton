@@ -78,3 +78,9 @@ Verify server replicas:
 ```sh
 curl -v localhost:8000
 ```
+
+Test a request
+
+```sh
+curl -X POST -d '{"name": "Queueing"}' localhost:8000/users
+```

@@ -7,12 +7,13 @@ import postgres from "postgres";
 const app = new Hono();
 const sql = postgres();
 
-const redis = new Redis(6379, "redis");
+const redisProducer = new Redis(6379, "redis");
 
 app.use("/*", cors());
 app.use("/*", logger());
 // Verify the server replicas (horizontal scaling)
 const REPLICA_ID = crypto.randomUUID();
+const QUEUE_NAME = "users";
 
 app.use("*", async (c, next) => {
     c.res.headers.set("X-Replica-Id", REPLICA_ID);
@@ -78,4 +79,21 @@ app.get(
     },
 );
 
+// Message queues with redis
+// app.post("/users", async (c) => {
+//     const { name } = await c.req.json();
+//     const user = await sql`INSERT INTO users (name) VALUES (${name})`;
+//     c.status(202);
+//     return c.body("Accepted");
+// });
+
+// Separate consumer service
+app.post("/users", async (c) => {
+    const { name } = await c.req.json();
+    await redisProducer.lpush(QUEUE_NAME, JSON.stringify({ name }));
+    c.status(202);
+    return c.body("Accepted");
+});
+
 export default app;
+
