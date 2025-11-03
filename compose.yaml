@@ -90,3 +90,10 @@ services:
     depends_on:
       - redis
       - database
+
+  # Adding LGTM for monitoring: The port 3000 is used for Grafana, and the port 4318 is used for the OpenTelemetry HTTP collector
+  lgtm:
+    image: grafana/otel-lgtm:0.8.6
+    ports:
+      - "3000:3000"
+      - "4318:4318"

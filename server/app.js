@@ -95,5 +95,11 @@ app.post("/users", async (c) => {
     return c.body("Accepted");
 });
 
+// LGTM test
+app.get("/api/lgtm-test", (c) => {
+    console.log("Hello log collection :)");
+    return c.json({ message: "Hello, world!" });
+});
+
 export default app;
 
