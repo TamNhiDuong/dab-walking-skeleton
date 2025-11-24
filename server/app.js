@@ -3,6 +3,7 @@ import { cors } from "@hono/hono/cors";
 import { logger } from "@hono/hono/logger";
 import { Redis } from "ioredis";
 import postgres from "postgres";
+import { auth } from "./auth.js";
 
 const app = new Hono();
 const sql = postgres();
@@ -100,6 +101,9 @@ app.get("/api/lgtm-test", (c) => {
     console.log("Hello log collection :)");
     return c.json({ message: "Hello, world!" });
 });
+
+// Auth
+app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
 export default app;
 

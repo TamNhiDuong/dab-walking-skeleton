@@ -1,13 +1,16 @@
 services:
   client:
-    build: client
+    build: ./client
     restart: unless-stopped
     volumes:
       - ./client:/app
-    ports:
-      - 4321:4321
     depends_on:
       - server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.client-router.entrypoints=web"
+      - "traefik.http.routers.client-router.rule=PathPrefix(`/`)"
+      - "traefik.http.services.client-service.loadbalancer.server.port=4321"
 
   k6-tests:
     entrypoint: "/bin/true"
@@ -97,3 +100,15 @@ services:
     ports:
       - "3000:3000"
       - "4318:4318"
+
+  # Machince learning API
+  inference-api:
+    build: inference-api
+    restart: unless-stopped
+    volumes:
+      - ./inference-api:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.inference-api-router.entrypoints=web"
+      - "traefik.http.routers.inference-api-router.rule=PathPrefix(`/inference-api`)"
+      - "traefik.http.services.inference-api-service.loadbalancer.server.port=8000"

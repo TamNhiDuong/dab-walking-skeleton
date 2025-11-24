@@ -84,3 +84,9 @@ Test a request
 ```sh
 curl -X POST -d '{"name": "Queueing"}' localhost:8000/users
 ```
+
+Test the machine learning API
+```sh
+curl -X POST -d '{"exercise": 1, "code": "SELECT * FROM secret;"}' localhost:8000/inference-api/predict
+{"prediction":94.99999999999997}%
+```
